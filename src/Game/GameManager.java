@@ -206,12 +206,12 @@ public class GameManager {
                 return airplaneX + 1 >= antiAircraftPointer && airplaneX < antiAircraftPointer + 3;
             }
             else{
-                return airplaneY + 1>= antiAircraftPointer && airplaneY < antiAircraftPointer + 5;
+                return airplaneY + 4 >= antiAircraftPointer && airplaneY < antiAircraftPointer + 3;
             }
         }
         else{
             if(antiAircraftDirection == 'v'){
-                return airplaneX + 1 >= antiAircraftPointer && airplaneX < antiAircraftPointer + 5;
+                return airplaneX + 4 >= antiAircraftPointer && airplaneX < antiAircraftPointer + 3;
             }
             else{
                 return airplaneY + 1 >= antiAircraftPointer && airplaneY < antiAircraftPointer + 3;
@@ -666,22 +666,21 @@ public class GameManager {
         return pattern.matcher(matchingStr);
     }
 
-    private ArrayList<Ship> getTypeShipByLenght(int length, Board board) {
+    private ArrayList<Ship> getTypeShipByLenght(int length, Board board){
 
-        switch (length) {
-            case 1 -> {
-                return board.s1Ships;
-            }
-            case 2 -> {
-                return board.s2Ships;
-            }
-            case 3 -> {
-                return board.s3Ships;
-            }
-            default -> {
-                return board.s4Ships;
-            }
+        if(length == 1){
+            return board.s1Ships;
+        }
+        else if (length == 2){
+            return board.s2Ships;
+        }
+        else if (length == 3){
+            return board.s3Ships;
+        }
+        else {
+            return board.s4Ships;
         }
     }
+
 
 }

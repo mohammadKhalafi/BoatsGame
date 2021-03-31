@@ -86,7 +86,7 @@ public class MainMenu {
     }
 
     private boolean isUsernameFormatValid(String username) {
-        if (username.matches("[\\w\\d]+")) {
+        if (username.matches("[\\w]+")) {
             return true;
         } else {
             return false;

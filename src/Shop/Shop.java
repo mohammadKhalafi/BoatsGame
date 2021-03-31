@@ -72,12 +72,20 @@ public class Shop {
 
     private static void buy(String product, int amount) {
 
-        switch (product) {
-            case "mine" -> user.setNumberOfMines(user.getNumberOfMines() + amount);
-            case "antiaircraft" -> user.setNumberOfAntiAircrafts(user.getNumberOfAntiAircrafts() + amount);
-            case "airplane" -> user.setNumberOfAirplanes(user.getNumberOfAirplanes() + amount);
-            case "scanner" -> user.setNumberOfScanners(user.getNumberOfScanners() + amount);
-            case "invisible" -> user.setNumberOfInvisibles(user.getNumberOfInvisibles() + amount);
+        if(product.equals("mine")){
+            user.setNumberOfMines(user.getNumberOfMines() + amount);
+        }
+        else if (product.equals("antiaircraft")){
+            user.setNumberOfAntiAircrafts(user.getNumberOfAntiAircrafts() + amount);
+        }
+        else if(product.equals("airplane")){
+            user.setNumberOfAirplanes(user.getNumberOfAirplanes() + amount);
+        }
+        else if(product.equals("scanner")){
+            user.setNumberOfScanners(user.getNumberOfScanners() + amount);
+        }
+        else if(product.equals("invisible")){
+            user.setNumberOfInvisibles(user.getNumberOfInvisibles() + amount);
         }
 
         user.setCredit(user.getCredit() - amount * products.get(product));
@@ -114,6 +122,5 @@ public class Shop {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(matchingStr);
     }
-
 
 }

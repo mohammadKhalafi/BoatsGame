@@ -174,8 +174,6 @@ public class Board {
 
     //put anti aircraft
 
-
-
     private void mangePutingAntiAircraft(Matcher matcher) {
         matcher.find();
         int rowOrColumnPointer = Integer.parseInt(matcher.group(1));
@@ -408,19 +406,17 @@ public class Board {
 
     private ArrayList<Ship> getTypeShipByLenght(int length){
 
-        switch (length){
-            case 1 -> {
-                return s1Ships;
-            }
-            case 2 -> {
-                return s2Ships;
-            }
-            case 3 -> {
-                return s3Ships;
-            }
-            default -> {
-                return s4Ships;
-            }
+        if(length == 1){
+            return s1Ships;
+        }
+        else if (length == 2){
+            return s2Ships;
+        }
+        else if (length == 3){
+            return s3Ships;
+        }
+        else {
+            return s4Ships;
         }
     }
 
