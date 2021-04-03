@@ -54,7 +54,6 @@ public class Board {
         }
 
         antiAircrafts = new ArrayList<>();
-
     }
 
     public Board(String username){
@@ -64,21 +63,23 @@ public class Board {
     public void arrangeTheBoard(){
         while (true){
             String command = Scan.scanner.nextLine();
-            if(command.matches("^put S[\\d]+ [\\d]+,[\\d]+ -[^ ]$")){
-                managePutingBoat(getMatcher(command, "^put S([\\d]+) ([\\d]+),([\\d]+) -([^ ])$"));
+            if(command.matches("put S\\d+ \\d+,\\d+ -\\S")){
+                managePutingBoat(getMatcher(command, "put S(\\d+) (\\d+),(\\d+) -(\\S)"));
             }
-            else if (command.matches("^put-mine ([\\d]+),([\\d]+)$")){
+            else if (command.matches("put-mine (\\d+),(\\d+)")){
                 managePutingMine(getMatcher(command, "^put-mine ([\\d]+),([\\d]+)$"));
             }
-            else if(command.matches("^show-my-board$")){
+            else if(command.matches("show-my-board")){
                 arrangePrintingMap();
                 showMyBoard();
             }
-            else if(command.matches("^put-antiaircraft ([\\d]+) -([^ ])$")){
-                mangePutingAntiAircraft(getMatcher(command, "^put-antiaircraft ([\\d]+) -([^ ])$"));
+            else if(command.matches("put-antiaircraft (\\d+) -(\\S)")){
+
+                mangePutingAntiAircraft(getMatcher(command, "put-antiaircraft (\\d+) -(\\S)"));
             }
-            else if (command.matches("^invisible ([\\d]+),([\\d]+)$")){
-                managePutingInvisible(getMatcher(command, "^invisible ([\\d]+),([\\d]+)$"));
+            else if (command.matches("invisible (\\d+),(\\d+)")){
+
+                managePutingInvisible(getMatcher(command, "invisible (\\d+),(\\d+)"));
             }
             else if(command.compareTo("finish-arranging") == 0){
                 if(canFinishArrange()){
@@ -88,12 +89,6 @@ public class Board {
             else if(command.equals("help")){
                 help();
             }
-            /*else if(command.equals("shop")){
-                User user = User.getUserByUsername(username);
-                System.out.println("airplane:" + user.getNumberOfAirplanes() + " scanner:" +
-                        user.getNumberOfScanners() + " mine:" + user.getNumberOfMines() +
-                        " anit:" + user.getNumberOfAntiAircrafts());
-            }*/
             else {
                 System.out.println(SomeOutputs.INVALID_COMMAND.getValue());
             }
@@ -168,7 +163,6 @@ public class Board {
         return boardMap[invisibleCoordinationY][invisibleCoordinationX].startsWith("S") ||
                 boardMap[invisibleCoordinationY][invisibleCoordinationX].startsWith("I");
     }
-
 
     private boolean doesUserHaveAnyInvisibles() {
         return User.getUserByUsername(username).getNumberOfInvisibles() > 0;
@@ -429,7 +423,7 @@ public class Board {
         if(direction == 'v'){
             for(int i = 0; i < length; i++){
 
-                if(!(boardMap[y + i][x].equals("  ") || boardMap[y + i][x].equals("AA"))){
+                if(!(boardMap[y + i][x].equals("  "))){
                     return true;
                 }
             }
@@ -437,7 +431,7 @@ public class Board {
         else{
             for(int i = 0; i < length; i++){
 
-                if(!(boardMap[y][x + i].equals("  ") || boardMap[y][x + i].equals("AA"))){
+                if(!(boardMap[y][x + i].equals("  "))){
                     return true;
                 }
             }

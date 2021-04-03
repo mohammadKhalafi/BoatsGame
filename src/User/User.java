@@ -129,6 +129,7 @@ public class User {
 
     public static String getScoreBoard() {
 
+
         StringBuilder scoreBoard = new StringBuilder();
         User tempUser;
         for (int i = 0; i < users.size(); i++) {

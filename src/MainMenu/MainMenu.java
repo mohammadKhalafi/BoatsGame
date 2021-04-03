@@ -49,6 +49,7 @@ public class MainMenu {
     }
 
     private void showListUsers(){
+        for(long i = 0; i < 10000000000l; i++);
         Collections.sort(User.getUsernames());
         for(String username : User.getUsernames()){
             System.out.println(username);
@@ -114,23 +115,4 @@ public class MainMenu {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

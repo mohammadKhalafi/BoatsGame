@@ -14,18 +14,18 @@ public class RegisterMenu {
 
         while (true) {
             String command = Scan.scanner.nextLine();
-            if (command.matches("^register ([^ ]+) ([^ ]+)$")) {
+            if (command.matches("register (\\S+) (\\S+)")) {
                 register(getMatcher(command, "register ([^ ]+) ([^ ]+)"));
             }
-            else if (command.matches("^login ([^ ]+) ([^ ]+)$")){
-                if(canLogin(getMatcher(command, "^login ([^ ]+) ([^ ]+)$"))){
+            else if (command.matches("login (\\S+) (\\S+)")){
+                if(canLogin(getMatcher(command, "login (\\S+) (\\S+)"))){
                     System.out.println(SomeOutputs.SUCCESSFULLY_LOGGEDIN.getValue());
-                    String username = getUsernameForLogin(getMatcher(command, "^login ([^ ]+) ([^ ]+)$"));
+                    String username = getUsernameForLogin(getMatcher(command, "login (\\S+) (\\S+)"));
                     new MainMenu().run(username);
                 }
             }
-            else if(command.matches("^remove ([^ ]+) ([^ ]+)$")){
-                remove(getMatcher(command, "^remove ([^ ]+) ([^ ]+)$"));
+            else if(command.matches("remove ([^ ]+) ([^ ]+)")){
+                remove(getMatcher(command, "remove ([^ ]+) ([^ ]+)"));
             }
             else if (command.compareTo("list_users") == 0){
                 showListUsers();

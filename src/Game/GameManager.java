@@ -61,24 +61,9 @@ public class GameManager {
         String command;
         while (true) {
 
-            /*System.out.println("its data:");
-
-            System.out.println("turn");
-            showTurn();
-
-            System.out.println("my board :");
-            showCurrentUserBoard();
-
-            System.out.println("rival board :");
-            showCurrentBoardForRival();
-
-            System.out.println("board 1 : " + board1.score + "  board2 : " + board2.score);
-
-            System.out.println("\n\n\n");*/
-
             command = Scan.scanner.nextLine();
             if (command.matches("bomb ([\\d]+),([\\d]+)")) {
-                manageBomb(getMatcher(command, "bomb ([\\d]+),([\\d]+)"));
+                manageBomb(getMatcher(command, "bomb (\\d+),(\\d+)"));
 
             } else if (command.equals("show-my-board")) {
                 showCurrentUserBoard();
@@ -93,6 +78,7 @@ public class GameManager {
                 help();
 
             } else if (command.matches("scanner ([\\d]+),([\\d]+)")) {
+
                 managePutScanner(getMatcher(command, "scanner ([\\d]+),([\\d]+)"));
 
             } else if (command.matches("put-airplane ([\\d]+),([\\d]+) -([^ ])")) {
@@ -103,14 +89,6 @@ public class GameManager {
                 return;
 
             }
-            /*else if (command.equals("score")){
-                System.out.println(currentBoard.score);
-            }
-            else if(command.equals("shop")){
-                System.out.println("airplane:" + currentUser.getNumberOfAirplanes() + " scanner:" +
-                        currentUser.getNumberOfScanners() + " mine:" + currentUser.getNumberOfMines() +
-                        " anit:" + currentUser.getNumberOfAntiAircrafts());
-            }*/
             else {
                 System.out.println(SomeOutputs.INVALID_COMMAND.getValue());
             }
@@ -402,12 +380,14 @@ public class GameManager {
             user2.setNumberOfDraws(user2.getNumberOfDraws() + 1);
 
         } else if (winner == 1) {
+            setCredit(user2, 0);
             setCredit(user1, 50);
             setScore(user1, 3);
             user1.setNumberOfWins(user1.getNumberOfWins() + 1);
             user2.setNumberOflosses(user2.getNumberOflosses() + 1);
 
         } else if (winner == 2) {
+            setCredit(user1, 0);
             setCredit(user2, 50);
             setScore(user2, 3);
             user2.setNumberOfWins(user2.getNumberOfWins() + 1);
