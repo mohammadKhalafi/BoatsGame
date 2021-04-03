@@ -57,7 +57,6 @@ public class Board {
 
     }
 
-
     public Board(String username){
         this.username = username;
     }
@@ -65,8 +64,8 @@ public class Board {
     public void arrangeTheBoard(){
         while (true){
             String command = Scan.scanner.nextLine();
-            if(command.matches("^put S[\\d] [\\d]+,[\\d]+ -[\\w]$")){
-                managePutingBoat(getMatcher(command, "^put S([\\d]) ([\\d]+),([\\d]+) -([\\w])$"));
+            if(command.matches("^put S[\\d]+ [\\d]+,[\\d]+ -[^ ]$")){
+                managePutingBoat(getMatcher(command, "^put S([\\d]+) ([\\d]+),([\\d]+) -([^ ])$"));
             }
             else if (command.matches("^put-mine ([\\d]+),([\\d]+)$")){
                 managePutingMine(getMatcher(command, "^put-mine ([\\d]+),([\\d]+)$"));
@@ -75,8 +74,8 @@ public class Board {
                 arrangePrintingMap();
                 showMyBoard();
             }
-            else if(command.matches("^put-antiaircraft ([\\d]+) -([\\w])$")){
-                mangePutingAntiAircraft(getMatcher(command, "^put-antiaircraft ([\\d]+) -([\\w])$"));
+            else if(command.matches("^put-antiaircraft ([\\d]+) -([^ ])$")){
+                mangePutingAntiAircraft(getMatcher(command, "^put-antiaircraft ([\\d]+) -([^ ])$"));
             }
             else if (command.matches("^invisible ([\\d]+),([\\d]+)$")){
                 managePutingInvisible(getMatcher(command, "^invisible ([\\d]+),([\\d]+)$"));
@@ -89,6 +88,12 @@ public class Board {
             else if(command.equals("help")){
                 help();
             }
+            /*else if(command.equals("shop")){
+                User user = User.getUserByUsername(username);
+                System.out.println("airplane:" + user.getNumberOfAirplanes() + " scanner:" +
+                        user.getNumberOfScanners() + " mine:" + user.getNumberOfMines() +
+                        " anit:" + user.getNumberOfAntiAircrafts());
+            }*/
             else {
                 System.out.println(SomeOutputs.INVALID_COMMAND.getValue());
             }
@@ -115,7 +120,6 @@ public class Board {
         }
         return true;
     }
-
 
     //put invisible
 
@@ -196,7 +200,6 @@ public class Board {
             return;
         }
 
-        //putAntiAircraftInTheMap(rowOrColumnPointer, direction);
         putAntiAircraftInTheArrayList(rowOrColumnPointer, direction);
         noteAntiAircraftInUserData();
 
@@ -248,6 +251,7 @@ public class Board {
         int tempNumMine = User.getUserByUsername(username).getNumberOfMines() - 1;
         User.getUserByUsername(username).setNumberOfMines(tempNumMine);
     }
+
     private void putMineInTheMap(int x, int y) {
         boardMap[y][x] = "Mm";
     }

@@ -36,6 +36,7 @@ public class GameManager {
     }
 
     private void setBoards() {
+
         board1 = new Board(username1);
         board1.arrangeTheBoard();
         System.out.println("turn completed");
@@ -53,7 +54,6 @@ public class GameManager {
     }
 
     public void run() {
-
         gameMenuScanner();
     }
 
@@ -95,14 +95,23 @@ public class GameManager {
             } else if (command.matches("scanner ([\\d]+),([\\d]+)")) {
                 managePutScanner(getMatcher(command, "scanner ([\\d]+),([\\d]+)"));
 
-            } else if (command.matches("put-airplane ([\\d]+),([\\d]+) -([\\w])")) {
-                managePutAirplane(getMatcher(command, "put-airplane ([\\d]+),([\\d]+) -([\\w])"));
+            } else if (command.matches("put-airplane ([\\d]+),([\\d]+) -([^ ])")) {
+                managePutAirplane(getMatcher(command, "put-airplane ([\\d]+),([\\d]+) -([^ ])"));
 
             } else if (command.equals("forfeit")) {
                 mangeForfeit();
                 return;
 
-            } else {
+            }
+            /*else if (command.equals("score")){
+                System.out.println(currentBoard.score);
+            }
+            else if(command.equals("shop")){
+                System.out.println("airplane:" + currentUser.getNumberOfAirplanes() + " scanner:" +
+                        currentUser.getNumberOfScanners() + " mine:" + currentUser.getNumberOfMines() +
+                        " anit:" + currentUser.getNumberOfAntiAircrafts());
+            }*/
+            else {
                 System.out.println(SomeOutputs.INVALID_COMMAND.getValue());
             }
 
@@ -137,11 +146,18 @@ public class GameManager {
             System.out.println("you don't have airplane");
             return;
         }
+
+        noteAirplaneInUserData();
+
         if (didAirplaneDestroyed(airplaneCoordinationX, airplaneCoordinationY, direction)) {
             System.out.println("the rival's antiaircraft destroyed your airplane");
             return;
         }
         putAirplane(airplaneCoordinationX, airplaneCoordinationY, direction);
+    }
+
+    private void noteAirplaneInUserData() {
+        currentUser.setNumberOfAirplanes(currentUser.getNumberOfAirplanes() - 1);
     }
 
     private void putAirplane(int x, int y, char direction) {
@@ -329,7 +345,6 @@ public class GameManager {
         currentBoard.showBoardForRival();
     }
 
-
     private void showCurrentUserBoard() {
 
         Board board = getUserBoard(currentUser);
@@ -509,7 +524,7 @@ public class GameManager {
     }
 
     private Ship destroyShip(int x, int y, Board board) {
-        ArrayList<Ship> ships = getTypeShipByLenght(getTypeShipInMap(board.boardMap[y][x]), board);
+        ArrayList<Ship> ships = getTypeShipByLength(getTypeShipInMap(board.boardMap[y][x]), board);
         Ship ship = returnDestroyedShip(ships, x, y);
         noteDestroyedShipInBoard(ship, x, y, board);
         noteScoreInBoard(board, 1);
@@ -531,9 +546,7 @@ public class GameManager {
         board.boardMapForRival[y][x] = "XX";
     }
 
-    //see -> 0
-    //ship -> 1
-    //mine -> -1
+    // see -> 0 | ship -> 1 | mine -> -1
     private int whatIsInThisPlace(int x, int y, Board board) {
 
         String tempMapData = board.boardMap[y][x];
@@ -583,7 +596,6 @@ public class GameManager {
                 }
             }
         }
-
     }
 
     private Ship returnDestroyedShip(ArrayList<Ship> ships, int x, int y) {
@@ -666,7 +678,7 @@ public class GameManager {
         return pattern.matcher(matchingStr);
     }
 
-    private ArrayList<Ship> getTypeShipByLenght(int length, Board board){
+    private ArrayList<Ship> getTypeShipByLength(int length, Board board){
 
         if(length == 1){
             return board.s1Ships;
@@ -681,6 +693,4 @@ public class GameManager {
             return board.s4Ships;
         }
     }
-
-
 }

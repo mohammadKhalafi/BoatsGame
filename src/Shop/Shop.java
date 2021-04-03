@@ -14,13 +14,12 @@ public class Shop {
     private static HashMap<String, Integer> products;
 
     static {
-        products = new HashMap<>(){{
-            put("mine", 1);
-            put("antiaircraft", 30);
-            put("airplane", 10);
-            put("scanner", 9);
-            put("invisible", 20);
-        }};
+        products = new HashMap<>();
+        products.put("mine", 1);
+        products.put("antiaircraft", 30);
+        products.put("airplane", 10);
+        products.put("scanner", 9);
+        products.put("invisible", 20);
     }
 
     public static void shopScanner(String username){
@@ -28,8 +27,8 @@ public class Shop {
         String command;
         while (true){
             command = Scan.scanner.nextLine();
-            if(command.matches("buy ([^ ]+) ([^ ]+)")){
-                manageBuy(getMatcher(command, "buy ([^ ]+) ([^ ]+)"));
+            if(command.matches("buy ([^ ]+) ([\\d]+)")){
+                manageBuy(getMatcher(command, "buy ([^ ]+) ([\\d]+)"));
             }
             else if(command.equals("help")){
                 help();
@@ -96,10 +95,9 @@ public class Shop {
     }
 
     private static boolean isAmountValid(String amount){
-        if(amount.matches("\\d+")){
-            int tempAmount = Integer.parseInt(amount);
-            return tempAmount != 0;
-        }
+        int tempAmount = Integer.parseInt(amount);
+        if(tempAmount != 0)
+            return true;
         return false;
     }
 

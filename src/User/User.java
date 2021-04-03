@@ -190,7 +190,6 @@ public class User {
         return true;
     }
 
-
     public void removeUser() {
         users.remove(this);
         usernames.remove(this.username);

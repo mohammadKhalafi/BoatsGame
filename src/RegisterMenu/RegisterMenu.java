@@ -61,9 +61,11 @@ public class RegisterMenu {
 
     private void showListUsers(){
         Collections.sort(User.getUsernames());
+        StringBuilder list = new StringBuilder();
         for(String username : User.getUsernames()){
-            System.out.println(username);
+            list.append(username + "\n");
         }
+        System.out.print(list);
     }
 
     private void remove(Matcher matcher){
@@ -71,11 +73,11 @@ public class RegisterMenu {
         String username = matcher.group(1);
         String password = matcher.group(2);
 
-        if(!isUsernameFormatValid(username)){
+        if(!isUsernameOrPasswordFormatValid(username)){
             System.out.println(SomeOutputs.INVAILID_USERNAME_FORMAT.getValue());
             return;
         }
-        if(!isPasswordFormatValid(password)){
+        if(!isUsernameOrPasswordFormatValid(password)){
             System.out.println(SomeOutputs.INVALID_PASSWORD_FORMAT.getValue());
             return;
         }
@@ -96,11 +98,11 @@ public class RegisterMenu {
         matcher.find();
         String username = matcher.group(1);
         String password = matcher.group(2);
-        if(!isUsernameFormatValid(username)){
+        if(!isUsernameOrPasswordFormatValid(username)){
             System.out.println(SomeOutputs.INVAILID_USERNAME_FORMAT.getValue());
             return false;
         }
-        if(!isPasswordFormatValid(password)){
+        if(!isUsernameOrPasswordFormatValid(password)){
             System.out.println(SomeOutputs.INVALID_PASSWORD_FORMAT.getValue());
             return false;
         }
@@ -127,11 +129,11 @@ public class RegisterMenu {
 
     private void register(Matcher matcher) {
         matcher.find();
-        if (!isUsernameFormatValid(matcher.group(1))) {
+        if (!isUsernameOrPasswordFormatValid(matcher.group(1))) {
             System.out.println(SomeOutputs.INVAILID_USERNAME_FORMAT.getValue());
             return;
         }
-        if (!isPasswordFormatValid(matcher.group(2))) {
+        if (!isUsernameOrPasswordFormatValid(matcher.group(2))) {
             System.out.println(SomeOutputs.INVALID_PASSWORD_FORMAT.getValue());
             return;
         }
@@ -144,16 +146,8 @@ public class RegisterMenu {
 
     }
 
-    private boolean isUsernameFormatValid(String username) {
-        if (username.matches("[\\w\\d]+")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean isPasswordFormatValid(String password){
-        if (password.matches("[\\w\\d]+")) {
+    private boolean isUsernameOrPasswordFormatValid(String username) {
+        if (username.matches("[\\w]+")) {
             return true;
         } else {
             return false;
